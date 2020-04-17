@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/menuDecideFragment">
+    <fragment
+        android:id="@+id/menuDecideFragment"
+        android:name="com.example.menuappv2.ui.fragment.MenuDecideFragment"
+        android:label="MenuDecideFragment" />
+    <fragment
+        android:id="@+id/menuListFragment"
+        android:name="com.example.menuappv2.ui.fragment.MenuListFragment"
+        android:label="MenuListFragment" >
+        <action
+            android:id="@+id/action_menuListFragment_to_menuDetailFragment"
+            app:destination="@id/menuDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuDetailFragment"
+        android:name="com.example.menuappv2.ui.fragment.MenuDetailFragment"
+        android:label="MenuDetailFragment" />
+</navigation>

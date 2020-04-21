@@ -36,7 +36,7 @@ class MenuApp: MultiDexApplication() {
      */
     private val viewModelModule = module {
         viewModel {
-            UserViewModel(get())
+            UserViewModel(get(), get())
         }
         viewModel {
             DecideViewModel(get(),get())

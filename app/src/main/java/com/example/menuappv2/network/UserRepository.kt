@@ -6,4 +6,8 @@ class UserRepository {
     fun loadApplicationUser() : DataOrError<User?> {
         return DataOrError(data = User())
     }
+
+    fun login(username: String, password: String){
+
+    }
 }

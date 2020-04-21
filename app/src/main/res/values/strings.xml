@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">MenuAppV2</string>
+    <!--Login-->
+    <string name="login_title">Login in</string>
+    <string name="login_welcome">Welcome with MenuApp</string>
+    <string name="login_username_required">Username is required</string>
+    <string name="login_password_required">Password is required</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 
     <!--Decide fragment-->
     <string name="click_the_decide_button">Click the decide button</string>

@@ -10,6 +10,7 @@ import com.example.menuappv2.R
 import com.example.menuappv2.adapter.MenuDetailAdapter
 import com.example.menuappv2.databinding.FragmentMenuDetailBinding
 import com.example.menuappv2.viewmodel.MenuDetailViewModel
+import com.example.menuappv2.viewmodel.UserViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_menu_detail.*
@@ -21,6 +22,8 @@ class MenuDetailFragment: Fragment() {
      * The [MenuDetailViewModel] for this fragment.
      */
     val viewModel: MenuDetailViewModel by sharedViewModel()
+
+    val uservm: UserViewModel by sharedViewModel()
 
     /**
      * the tabconfiguration for the fragment
@@ -47,8 +50,10 @@ class MenuDetailFragment: Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_detail, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+        if(uservm.getUser().value !== null) {
+            inflater.inflate(R.menu.menu_detail, menu)
+            super.onCreateOptionsMenu(menu, inflater)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

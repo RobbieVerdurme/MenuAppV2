@@ -4,7 +4,7 @@ class Food(
     private var key: String,
     private var name: String,
     private var ingredients: MutableList<Ingredient>,
-    var discritpion: String,
+    private var description: String,
     var preperation: String,
     var createrMenu: String
 ) {
@@ -23,7 +23,7 @@ class Food(
     /**
      * @return description of food
      */
-    fun getDescription(): String = discritpion
+    fun getDescription(): String = description
 
     /**
      * @return the ingredients of the food

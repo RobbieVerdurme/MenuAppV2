@@ -18,6 +18,7 @@ import com.example.menuappv2.databinding.FragmentMenuListBinding
 import com.example.menuappv2.model.Food
 import com.example.menuappv2.viewmodel.MenuDetailViewModel
 import com.example.menuappv2.viewmodel.MenuListViewModel
+import com.example.menuappv2.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_menu_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,6 +29,7 @@ class MenuListFragment : Fragment(), MenuClickListener {
      */
     val viewModel: MenuListViewModel by viewModel()
     val menuDetailViewModel: MenuDetailViewModel by sharedViewModel()
+    val uservm: UserViewModel by sharedViewModel()
 
     /**
      * the adapter for this fragment
@@ -75,6 +77,14 @@ class MenuListFragment : Fragment(), MenuClickListener {
                 (listFood.adapter as Filterable).filter.filter(txtFilter.text.toString())
             }
         })
+
+        fab.setOnClickListener {
+            if (uservm.getUser().value === null) {
+                findNavController().navigate(R.id.loginFragment)
+            } else {
+                findNavController().navigate(R.id.profileFragment)
+            }
+        }
     }
 
     /**

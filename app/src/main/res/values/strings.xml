@@ -7,6 +7,11 @@
     <string name="login_password_required">Password is required</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <!--ERROR
+    -->
+    <string name="login_io_exception">Login mislukt, probeer later nog eens</string>
+    <string name="generic_error">Er liep iets fout</string>
+    <string name="login_invalid">Login ongeldig</string>
 
     <!--Decide fragment-->
     <string name="click_the_decide_button">Click the decide button</string>

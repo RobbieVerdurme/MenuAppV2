@@ -28,4 +28,8 @@
             android:id="@+id/action_loginFragment_to_menuListFragment"
             app:destination="@id/menuListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.menuappv2.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>

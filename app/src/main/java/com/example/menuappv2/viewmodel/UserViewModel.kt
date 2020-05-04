@@ -1,25 +1,29 @@
 package com.example.menuappv2.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import com.example.menuappv2.R
-import com.example.menuappv2.model.User
+import com.example.menuappv2.network.DataError
 import com.example.menuappv2.network.UserRepository
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class UserViewModel(
     private val userRepository: UserRepository,
     application: Application
 ): AndroidViewModel(application) {
-    private val user = MutableLiveData<User?>(null)
+    private val user = MutableLiveData<FirebaseUser?>(null)
     val username = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
+
     private val usernameError = MutableLiveData<String>(null)
     private val passwordError = MutableLiveData<String>(null)
     private val usernameRequired: String = application.getString(R.string.login_username_required)
     private val passwordRequired: String = application.getString(R.string.login_password_required)
+
+    private val genericError = application.getString(R.string.generic_error)
+    private val serverUnreachable = application.getString(R.string.login_io_exception)
 
     private val usernameObserver = Observer<String>{onUsernameChanged(it)}
     private val passwordObserver = Observer<String>{onPasswordChanged(it)}
@@ -31,15 +35,15 @@ class UserViewModel(
     fun getRequestError(): LiveData<String> = requestError
     fun getUsernameError(): LiveData<String> = usernameError
     fun getPasswordError():LiveData<String> = passwordError
-    fun getLoggedInUser(): LiveData<User?> = user
     fun getBusy(): LiveData<Boolean> = busy
     /**
      * Getter that exposes [user] as [LiveData] to prevent writable leaks.
      */
-    fun getUser(): LiveData<User?> = user
+    fun getUser(): LiveData<FirebaseUser?> = user
 
 
     init{
+        user.value = userRepository.loadApplicationUser()
         username.observeForever(usernameObserver)
         password.observeForever(passwordObserver)
         //Reset the error values.
@@ -88,13 +92,36 @@ class UserViewModel(
 
     fun login(username:String, password: String){
         if(!busy.value!!){
-            busy.value = true
-            userRepository.login(username, password)
-            busy.value = false
+            viewModelScope.launch {
+                busy.value = true
+                requestError.value = null
+                val repoResult = async {
+                    userRepository.login(username, password)
+                }
+                val dataOrError = repoResult.await()
+                if(dataOrError.hasError()){
+                    requestError.value = when(dataOrError.error){
+                        DataError.API_INTERNAL_SERVER_ERROR -> serverUnreachable
+                        else -> genericError
+                    }
+                }else {
+                    user.value = dataOrError.data
+                }
+                busy.value = false
+            }
         }
     }
 
-    fun setUser(newUser: User){
-        user.value = newUser
+    fun logout(){
+        if(!busy.value!!){
+            busy.value = true
+            try{
+                userRepository.logout()
+                user.value = null
+            }catch (e: Error){
+                println(e)
+            }
+            busy.value = false
+        }
     }
 }

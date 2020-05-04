@@ -34,6 +34,11 @@ class LoginFragment: Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupFragment()
+    }
+
     /**
      * Setup this [Fragment]
      */
@@ -65,11 +70,6 @@ class LoginFragment: Fragment() {
         userViewModel.getRequestError().observe(viewLifecycleOwner, Observer {
             if(it != null){
                     Toast.makeText(context,it, Toast.LENGTH_SHORT).show()
-            }
-        })
-        userViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer {
-            if(it != null){
-                userViewModel.setUser(it)
             }
         })
     }

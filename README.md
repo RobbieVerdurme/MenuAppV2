@@ -10,3 +10,4 @@
 
 ## Authors
 - Robbie Verdurme - *Initial work* - [GitHub](https://github.com/RobbieVerdurme)
+- Navaron Bracke - Bugg fixes - [Github](https://github.com/BrackeNavaron)

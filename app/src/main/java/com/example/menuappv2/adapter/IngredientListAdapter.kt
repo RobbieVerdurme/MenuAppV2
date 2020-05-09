@@ -20,7 +20,7 @@ class IngredientListAdapter(
     }
 
     override fun onBindViewHolder(holder: IngredientListViewHolder, position: Int) {
-        val ingredient = dataset[position]
+        val ingredient = dataset[holder.adapterPosition]
         holder.binding.ingredient = ingredient
         holder.binding.executePendingBindings()
     }

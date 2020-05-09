@@ -12,7 +12,7 @@ import com.google.firebase.ktx.Firebase
 import java.util.ArrayList
 
 class MenuRepository {
-    private var liveFoodList :MutableLiveData<List<Food>> = MutableLiveData<List<Food>>()
+    private var liveFoodList :MutableLiveData<ArrayList<Food>> = MutableLiveData<ArrayList<Food>>(arrayListOf())
     private var foodList = ArrayList<Food>()
     private val firebaseDatabase = Firebase.database
     private val databaseRefrenceData = firebaseDatabase.getReference("FoodList")
@@ -32,20 +32,19 @@ class MenuRepository {
                     food?.setKey(h.key!!)
                     foodList.add(food!!)
                 }
-                liveFoodList.value = foodList as List<Food>
+                liveFoodList.value!!.clear()
+                liveFoodList.value!!.addAll(foodList)
             }
         })
     }
 
     fun getFoodList(): LiveData<List<Food>> {
-        if(liveFoodList.value == null){
-            liveFoodList.value = foodList as List<Food>
-        }
-        return liveFoodList
+        return liveFoodList as LiveData<List<Food>>
     }
 
     fun remove(food:Food){
         databaseRefrenceData.child("Food").child(food.getKey()).removeValue()
+        liveFoodList.value!!.remove(food)
     }
 
     fun save(food : Food){
@@ -54,9 +53,12 @@ class MenuRepository {
             if(key != null){
                 food.setKey(key)
                 databaseRefrenceData.child("Food").push().setValue(food)
+                liveFoodList.value!!.add(food)
             }
         }else{
             databaseRefrenceData.child("Food").child(food.getKey()).setValue(food)
+            val index = liveFoodList.value!!.indexOf(food)
+            liveFoodList.value!![index] = food
         }
     }
 }

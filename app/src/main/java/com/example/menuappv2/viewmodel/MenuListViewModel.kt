@@ -23,11 +23,4 @@ class MenuListViewModel(
     fun getFoodList() : LiveData<List<Food>> {
         return menuRepository.getFoodList()
     }
-
-    /**
-     * set selected menu
-     */
-    fun setSelectedMenu(menu: Food){
-        selectedMenu = menu
-    }
 }

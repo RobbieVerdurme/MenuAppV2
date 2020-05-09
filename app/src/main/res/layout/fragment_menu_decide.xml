@@ -12,12 +12,16 @@
         <TextView
             android:text="@{viewModel.chosenRandomfoodName}"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/lblMenu"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblMenu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btnDecide" app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintBottom_toTopOf="@+id/btnDecide"
+            app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintVertical_bias="0.431"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:textSize="30sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="30sp"
             android:textAlignment="center"/>
         <Button
             android:text="@string/decide"

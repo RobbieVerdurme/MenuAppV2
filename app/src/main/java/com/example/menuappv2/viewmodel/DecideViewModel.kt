@@ -14,9 +14,9 @@ class DecideViewModel(
     private val application: Application
 ): ViewModel() {
     /************************************************variablen*********************************************************/
-    private var foodList: MutableLiveData<List<Food>> = menuRepository.getFoodList()
+    private var foodList: LiveData<List<Food>> = menuRepository.getFoodList()
     private val chosenRandomfoodName = MutableLiveData<String>(application.getString(R.string.click_the_decide_button))
-
+    private lateinit var chosenFood :Food
     /************************************************Methods***********************************************************/
     fun RandomFood() {
         if(foodList.value.isNullOrEmpty()){
@@ -24,11 +24,14 @@ class DecideViewModel(
         }else{
             val random = Random
             val randomId = random.nextInt(foodList.value!!.size)
-            chosenRandomfoodName.value = foodList.value!![randomId].getName()
+            chosenFood = foodList.value!![randomId]
+            chosenRandomfoodName.value = chosenFood.getName()
         }
     }
 
     fun getChosenRandomfoodName(): LiveData<String> {
         return chosenRandomfoodName
     }
+
+    fun getMenu(): Food = chosenFood
 }

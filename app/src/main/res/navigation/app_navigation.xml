@@ -15,9 +15,36 @@
         <action
             android:id="@+id/action_menuListFragment_to_menuDetailFragment"
             app:destination="@id/menuDetailFragment" />
+        <action
+            android:id="@+id/action_menuListFragment_to_registerMenuFragment"
+            app:destination="@id/registerMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/menuDetailFragment"
         android:name="com.example.menuappv2.ui.fragment.MenuDetailFragment"
         android:label="MenuDetailFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.menuappv2.ui.fragment.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_menuListFragment"
+            app:destination="@id/menuListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.menuappv2.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/registerMenuFragment"
+        android:name="com.example.menuappv2.ui.fragment.RegisterMenuFragment"
+        android:label="RegisterMenuFragment" />
+    <fragment
+        android:id="@+id/registerMenuListFragment"
+        android:name="com.example.menuappv2.ui.fragment.RegisterMenuListFragment"
+        android:label="RegisterMenuListFragment" />
+    <fragment
+        android:id="@+id/registerMenuPreperationFragment"
+        android:name="com.example.menuappv2.ui.fragment.RegisterMenuPreperationFragment"
+        android:label="RegisterMenuPreperationFragment" />
 </navigation>

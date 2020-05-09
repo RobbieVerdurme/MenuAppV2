@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filterable
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +17,11 @@ import com.example.menuappv2.adapter.MenuClickListener
 import com.example.menuappv2.adapter.MenuFoodListAdapter
 import com.example.menuappv2.databinding.FragmentMenuListBinding
 import com.example.menuappv2.model.Food
+import com.example.menuappv2.model.Ingredient
 import com.example.menuappv2.viewmodel.MenuDetailViewModel
 import com.example.menuappv2.viewmodel.MenuListViewModel
+import com.example.menuappv2.viewmodel.RegisterMenuViewModel
+import com.example.menuappv2.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_menu_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,6 +32,7 @@ class MenuListFragment : Fragment(), MenuClickListener {
      */
     val viewModel: MenuListViewModel by viewModel()
     val menuDetailViewModel: MenuDetailViewModel by sharedViewModel()
+    val uservm: UserViewModel by sharedViewModel()
 
     /**
      * the adapter for this fragment
@@ -60,7 +65,7 @@ class MenuListFragment : Fragment(), MenuClickListener {
      * setup fragment
      */
     fun setupFragment() {
-        menuListAdapter = MenuFoodListAdapter(this,viewModel.getFoodList())
+        menuListAdapter = MenuFoodListAdapter(this,viewModel.getFoodList().value!!)
         recyclerview.apply {
             adapter = menuListAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -75,6 +80,23 @@ class MenuListFragment : Fragment(), MenuClickListener {
                 (listFood.adapter as Filterable).filter.filter(txtFilter.text.toString())
             }
         })
+
+        fab.setOnClickListener {
+            if (uservm.getUser().value === null) {
+                findNavController().navigate(R.id.loginFragment)
+            } else {
+                val registervm: RegisterMenuViewModel by sharedViewModel()
+                registervm.setMenu(Food("","",ArrayList<Ingredient>(), "","",uservm.getUser().value!!.email!!))
+                findNavController().navigate(R.id.action_menuListFragment_to_registerMenuFragment)
+            }
+        }
+
+        viewModel.getFoodList().observe(viewLifecycleOwner, Observer {
+            if (it != null){
+                menuListAdapter.setItems(it)
+                menuListAdapter.notifyDataSetChanged()
+            }
+        } )
     }
 
     /**

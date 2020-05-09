@@ -1,5 +1,7 @@
 package com.example.menuappv2.network
 
+import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.menuappv2.model.Food
 import com.google.firebase.database.DataSnapshot
@@ -35,7 +37,7 @@ class MenuRepository {
         })
     }
 
-    fun getFoodList(): MutableLiveData<List<Food>>{
+    fun getFoodList(): LiveData<List<Food>> {
         if(liveFoodList.value == null){
             liveFoodList.value = foodList as List<Food>
         }
@@ -48,7 +50,11 @@ class MenuRepository {
 
     fun save(food : Food){
         if(food.getKey().isEmpty()){
-            databaseRefrenceData.child("Food").push().setValue(food)
+            val key = databaseRefrenceData.child("Food").push().key
+            if(key != null){
+                food.setKey(key)
+                databaseRefrenceData.child("Food").push().setValue(food)
+            }
         }else{
             databaseRefrenceData.child("Food").child(food.getKey()).setValue(food)
         }

@@ -10,7 +10,7 @@ import com.example.menuappv2.model.Food
 
 class MenuFoodListAdapter(
     private val clickListener: MenuClickListener,
-    private val dataset: List<Food>
+    private var dataset: List<Food>
 ): RecyclerView.Adapter<MenuFoodListAdapter.MenuFoodListViewHolder>(), Filterable{
     /************************************************variablen*********************************************************/
     private var filterListResult: ArrayList<Food>
@@ -67,6 +67,10 @@ class MenuFoodListAdapter(
             }
             filterListResult = resultList
         }
+    }
+
+    fun setItems(newItems: List<Food>){
+        this.dataset = newItems
     }
     /**************************************************inner class*****************************************************/
     class MenuFoodListViewHolder(val binding: ItemFoodLlistBinding): RecyclerView.ViewHolder(binding.root)

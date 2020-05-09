@@ -33,7 +33,7 @@
             app:layout_constraintTop_toBottomOf="@+id/logo" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/username"
+            android:id="@+id/foodInfo"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/foodInfo"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true"
             app:error="@{viewmodel.getPasswordError()}">

@@ -6,7 +6,7 @@ import com.example.menuappv2.model.Food
 import com.example.menuappv2.network.MenuRepository
 
 class MenuDetailViewModel(
-    private val menuRepository: MenuRepository,
+    private val repository: MenuRepository,
     application: Application): AndroidViewModel(application) {
     /************************************************variablen*********************************************************/
     private lateinit var menu:Food
@@ -16,5 +16,9 @@ class MenuDetailViewModel(
 
     fun setMenu(newMenu: Food){
         menu = newMenu
+    }
+
+    fun deleteMenu() {
+        repository.remove(menu)
     }
 }

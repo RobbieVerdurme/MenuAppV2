@@ -3,10 +3,7 @@ package com.example.menuappv2.application
 import androidx.multidex.MultiDexApplication
 import com.example.menuappv2.network.MenuRepository
 import com.example.menuappv2.network.UserRepository
-import com.example.menuappv2.viewmodel.DecideViewModel
-import com.example.menuappv2.viewmodel.MenuDetailViewModel
-import com.example.menuappv2.viewmodel.MenuListViewModel
-import com.example.menuappv2.viewmodel.UserViewModel
+import com.example.menuappv2.viewmodel.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -46,6 +43,9 @@ class MenuApp: MultiDexApplication() {
         }
         viewModel {
             MenuDetailViewModel(get(),get())
+        }
+        viewModel {
+            RegisterMenuViewModel(get(), get())
         }
     }
 

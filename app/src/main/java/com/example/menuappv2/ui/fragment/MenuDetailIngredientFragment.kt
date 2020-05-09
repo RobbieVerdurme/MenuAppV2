@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.menuappv2.adapter.IngredientListAdapter
 import com.example.menuappv2.databinding.MenuDetailIngredientsBinding
+import com.example.menuappv2.model.Ingredient
 import com.example.menuappv2.viewmodel.MenuDetailViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -37,7 +38,7 @@ class MenuDetailIngredientFragment: Fragment() {
     }
 
     fun setupFragment(){
-        ingredientAdapter = IngredientListAdapter(viewModel.getMenu().getIngredients())
+        ingredientAdapter = IngredientListAdapter(viewModel.getMenu().getIngredients() as ArrayList<Ingredient>)
         recyclerview.apply {
             adapter = ingredientAdapter
             layoutManager = LinearLayoutManager(activity)

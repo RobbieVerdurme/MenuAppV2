@@ -20,13 +20,8 @@ class MenuListViewModel(
     /**
      * @return foodlist
      */
-    fun getFoodList() : List<Food> {
-        val foodList = menuRepository.getFoodList()
-        if(foodList.value === null){
-            return ArrayList<Food>()
-        }else{
-            return foodList.value!!
-        }
+    fun getFoodList() : LiveData<List<Food>> {
+        return menuRepository.getFoodList()
     }
 
     /**

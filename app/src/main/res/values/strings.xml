@@ -17,4 +17,13 @@
     <string name="click_the_decide_button">Click the decide button</string>
     <string name="decide">DECIDE</string>
     <string name="No_Food_In_List">No food in list. Please add food</string>
+
+    <!--Register menu-->
+    <string name="description_of_the_food">Description of the food</string>
+    <string name="title_of_the_food">Title of the food</string>
+    <string name="type_your_preperation_here">Type your preperation here</string>
+    <string-array name="spinnerMesurement">
+        <item>Test</item>
+        <item>Test2</item>
+    </string-array>
 </resources>

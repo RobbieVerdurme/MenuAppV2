@@ -3,7 +3,7 @@ package com.example.menuappv2.model
 class Food(
     private var key: String,
     private var name: String,
-    private var ingredients: MutableList<Ingredient>,
+    private var ingredients: ArrayList<Ingredient>,
     private var description: String,
     var preperation: String,
     var createrMenu: String
@@ -35,5 +35,17 @@ class Food(
      */
     fun setKey(newKey: String) {
         this.key = newKey
+    }
+
+    fun setName(newName: String){
+        this.name = newName
+    }
+
+    fun setDescription(newDesciption: String){
+        this.description = newDesciption
+    }
+
+    fun setIngredients(newIngredients: List<Ingredient>){
+        this.ingredients = newIngredients as ArrayList
     }
 }

@@ -10,18 +10,18 @@ import com.example.menuappv2.R
 import com.example.menuappv2.adapter.MenuDetailAdapter
 import com.example.menuappv2.databinding.FragmentMenuDetailBinding
 import com.example.menuappv2.viewmodel.MenuDetailViewModel
+import com.example.menuappv2.viewmodel.RegisterMenuViewModel
 import com.example.menuappv2.viewmodel.UserViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_menu_detail.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MenuDetailFragment: Fragment() {
     /**
      * The [MenuDetailViewModel] for this fragment.
      */
     val viewModel: MenuDetailViewModel by sharedViewModel()
+    val registerMenuviewModel: RegisterMenuViewModel by sharedViewModel()
 
     val uservm: UserViewModel by sharedViewModel()
 
@@ -50,20 +50,22 @@ class MenuDetailFragment: Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(uservm.getUser().value !== null) {
+        if(uservm.getUser().value != null && uservm.getUser().value?.email == viewModel.getMenu().createrMenu) {
             inflater.inflate(R.menu.menu_detail, menu)
-            super.onCreateOptionsMenu(menu, inflater)
         }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.editMenu -> {
-                findNavController().navigate(R.id.menuDetailFragment)
+                registerMenuviewModel.setMenu(viewModel.getMenu())
+                findNavController().navigate(R.id.registerMenuFragment)
                 true
             }
             R.id.deleteMenu -> {
-                findNavController().navigate(R.id.menuDetailFragment)
+                viewModel.deleteMenu()
+                findNavController().navigate(R.id.menuListFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -76,7 +78,7 @@ class MenuDetailFragment: Fragment() {
             adapter = menuDetailAdapter
         }
         TabLayoutMediator(tabLayout, viewPager){tab, position ->
-            var text: String
+            val text: String
             when(position){
                 0 -> text = "Info"
                 1 -> text = "Ingredients"

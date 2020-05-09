@@ -14,7 +14,7 @@ class DecideViewModel(
     private val application: Application
 ): ViewModel() {
     /************************************************variablen*********************************************************/
-    private var foodList: MutableLiveData<List<Food>> = menuRepository.getFoodList()
+    private var foodList: LiveData<List<Food>> = menuRepository.getFoodList()
     private val chosenRandomfoodName = MutableLiveData<String>(application.getString(R.string.click_the_decide_button))
 
     /************************************************Methods***********************************************************/

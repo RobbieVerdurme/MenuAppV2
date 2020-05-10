@@ -3,6 +3,7 @@ package com.example.menuappv2.network
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.tasks.await
 
 class UserRepository {
     private val user = MutableLiveData<FirebaseUser>(null)
@@ -17,7 +18,7 @@ class UserRepository {
         return user.value
     }
 
-    fun login(username: String, password: String): DataOrError<FirebaseUser?>{
+    suspend fun login(username: String, password: String): DataOrError<FirebaseUser?>{
         var error: DataError = DataError.NO_ERROR
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener {
             if(it.isSuccessful){
@@ -27,8 +28,8 @@ class UserRepository {
             } else {
                 error = DataError.API_INTERNAL_SERVER_ERROR
             }
-        }
-        return DataOrError(data = user.value, error = error)
+        }.await()
+        return DataOrError(data = auth.currentUser, error = error)
     }
 
     fun logout() {

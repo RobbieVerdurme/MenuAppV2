@@ -96,5 +96,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_lifecycle_extensions_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 }
 apply plugin: 'com.google.gms.google-services'

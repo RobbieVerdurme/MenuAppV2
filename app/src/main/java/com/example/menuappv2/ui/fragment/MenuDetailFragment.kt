@@ -2,6 +2,7 @@ package com.example.menuappv2.ui.fragment
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.findNavController
@@ -64,7 +65,9 @@ class MenuDetailFragment: Fragment() {
                 true
             }
             R.id.deleteMenu -> {
-                viewModel.deleteMenu()
+                if (viewModel.deleteMenu()) {
+                    Toast.makeText(context, "Error while deleting menu", Toast.LENGTH_LONG).show()
+                }
                 findNavController().navigate(R.id.menuListFragment)
                 true
             }

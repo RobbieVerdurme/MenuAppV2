@@ -1,12 +1,12 @@
 package com.example.menuappv2.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import android.widget.Toast
+import androidx.lifecycle.*
 import com.example.menuappv2.model.Food
 import com.example.menuappv2.network.MenuRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class RegisterMenuViewModel(private val repository: MenuRepository, application: Application): AndroidViewModel(application) {
     /************************************************variablen*********************************************************/
@@ -23,6 +23,7 @@ class RegisterMenuViewModel(private val repository: MenuRepository, application:
     val foodName = MutableLiveData<String>("")
     val foodDescription = MutableLiveData<String>("")
     val foodPreperation = MutableLiveData<String>("")
+    private var busy = MutableLiveData<Boolean>(false)
 
     // OBSERVER
     private val foodNameObserver = Observer<String>{onFoodNameChanged(it)}
@@ -99,7 +100,20 @@ class RegisterMenuViewModel(private val repository: MenuRepository, application:
         foodPreperation.removeObserver(foodPreperationObserver)
     }
 
-    fun saveMenu(){
-        repository.save(menu)
+    fun saveMenu(): Boolean{
+        var completed = true
+        if(!busy.value!!){
+            viewModelScope.launch {
+                busy.value = true
+                val reporesult = async { repository.save(menu) }
+                val completedRequest = reporesult.await()
+                if(!completedRequest){
+                    completed = false
+                }
+                busy.value = false
+            }
+            return completed
+        }
+        return false
     }
 }

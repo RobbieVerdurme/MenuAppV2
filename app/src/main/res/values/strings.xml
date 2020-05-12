@@ -2,7 +2,7 @@
     <string name="app_name">MenuAppV2</string>
     <!--Login-->
     <string name="login_title">Login in</string>
-    <string name="login_welcome">Welcome with MenuApp</string>
+    <string name="login_welcome">Login to MenuApp</string>
     <string name="login_username_required">Username is required</string>
     <string name="login_password_required">Password is required</string>
     <string name="username">Username</string>
@@ -23,7 +23,11 @@
     <string name="title_of_the_food">Title of the food</string>
     <string name="type_your_preperation_here">Type your preperation here</string>
     <string-array name="spinnerMesurement">
-        <item>Test</item>
-        <item>Test2</item>
+        <item>Liter</item>
+        <item>Centiliter</item>
+        <item>Kilo</item>
+        <item>Gram</item>
+        <item>Unit</item>
+        <item>Tablespoons</item>
     </string-array>
 </resources>

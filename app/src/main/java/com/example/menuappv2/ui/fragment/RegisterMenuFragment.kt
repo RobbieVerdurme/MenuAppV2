@@ -41,7 +41,9 @@ class RegisterMenuFragment: Fragment() {
         return when(item.itemId){
             R.id.save -> {
                 if(viewModel.validateForm()){
-                    viewModel.saveMenu()
+                    if(!viewModel.saveMenu()){
+                        Toast.makeText(context,"Error while adding menu to database",Toast.LENGTH_LONG).show()
+                    }
                     findNavController().navigate(R.id.menuListFragment)
                 }else {
                     Toast.makeText(context,"Error while adding menu",Toast.LENGTH_LONG).show()

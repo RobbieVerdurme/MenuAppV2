@@ -42,23 +42,27 @@ class MenuRepository {
         return liveFoodList as LiveData<List<Food>>
     }
 
-    fun remove(food:Food){
+    fun remove(food:Food): Boolean{
         databaseRefrenceData.child("Food").child(food.getKey()).removeValue()
         liveFoodList.value!!.remove(food)
+        return true
     }
 
-    fun save(food : Food){
+    fun save(food : Food): Boolean{
         if(food.getKey().isEmpty()){
             val key = databaseRefrenceData.child("Food").push().key
             if(key != null){
                 food.setKey(key)
                 databaseRefrenceData.child("Food").push().setValue(food)
                 liveFoodList.value!!.add(food)
+                return true
             }
         }else{
             databaseRefrenceData.child("Food").child(food.getKey()).setValue(food)
             val index = liveFoodList.value!!.indexOf(food)
             liveFoodList.value!![index] = food
+            return true
         }
+        return false
     }
 }
